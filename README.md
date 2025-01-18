@@ -14,6 +14,8 @@ In `/etc/wireguard` in your server node, create a `.conf` file with any name of 
 
 In this file, simply copy and fill out the [server instance configuration template file](server-template.conf). The `PrivateKey` entry under `[Interface]` is the server's private key, and the `PrivateKey` entry under `[Peer]` is the client's public key. Be sure to fill out the `Address` and `Port` entries under `[Interface]` with what the server will operate as and listen from, and the `AllowedIPs` entry under `[Peer]` with the IP address that the client will connect as. In addition, any pre-shared key will go into the `PresharedKey` entry under `[Peer]`.
 
+The iptables `iptables -A FORWARD` entries are in the configuration file to allow packets to forwarded in and out of the interface, and the iptables `iptables -t nat -A POSTROUTING -o <NETWORK_INTERFACE> -j MASQUERADE` entry enables Network Access Translation (NAT) for packets going in and out of the external interface. Be sure to replace <NETWORK_INTERFACE> with the name of the network interface that you want to use to interact with outside IP addresses. (`%i` in this instance is a placeholder that is automatically replaced with the WireGuard interface name)
+
 Be sure to save the file.
 
 ### Step 3: Creating the client instance configuration file
@@ -29,4 +31,9 @@ Now that you have the configuration files on both ends filled out, you are now a
 *Note:* To take down the WireGuard connection, simply run `wg-quick down <CONFIG_FILE_NAME>`.
 
 ### Step 5: Creating services to automatically set up WireGuard on startup (optional)
-If you want wg-quick to automatically run on startup, you will need to create a systemd service. To do this, simply run `systemctl enable wg-quick@<CONFIG_FILE_NAME>`
+If you want wg-quick to automatically run on startup, you will need to create a systemd service. To do this, simply run `systemctl enable wg-quick@<CONFIG_FILE_NAME>`.
+
+## Troubleshooting
+
+If something is going wrong, you may have these going on:
+- test
