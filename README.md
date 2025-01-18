@@ -35,5 +35,12 @@ If you want wg-quick to automatically run on startup, you will need to create a 
 
 ## Troubleshooting
 
-If something is going wrong, you may have these going on:
-- test
+If something is going wrong, be sure to check for these:
+- The private/public keys are in the correct spots in the configuration files
+- The port works and is not being used for anything else
+- The client and server IP addresses correspond to the correct spots in the configuration files
+- The client is able to connect to the server (try using ping) outside of WireGuard
+- The `AllowedIPs` entry in the client configuration file include all of the IPs you want to connect to (including of the server itself), aren't too broad, or are in conflict with other IP ranges from other interfaces or programs
+- `wg show` shows something happening (including handshake information) and `ip route` shows a route for the WireGuard interface
+- `tcpdump -i <CONFIG_FILE_NAME>` shows activity when pings happen
+- The kernel and other networking tools are in working order
