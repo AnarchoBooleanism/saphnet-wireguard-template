@@ -16,6 +16,8 @@ In this file, simply copy and fill out the [server instance configuration templa
 
 The iptables `iptables -A FORWARD` entries are in the configuration file to allow packets to forwarded in and out of the interface, and the iptables `iptables -t nat -A POSTROUTING -o <NETWORK_INTERFACE> -j MASQUERADE` entry enables Network Access Translation (NAT) for packets going in and out of the external interface. Be sure to replace <NETWORK_INTERFACE> with the name of the network interface that you want to use to interact with outside IP addresses. (`%i` in this instance is a placeholder that is automatically replaced with the WireGuard interface name)
 
+If you want to have specific ports forwarded to an external interface that the server is connected to, be sure to fill out the `iptables` entries (and create more as needed per port) with the external port to forward from and the client IP address and port to forward to. There are individual entries for both TCP and UDP.
+
 Be sure to save the file.
 
 ### Step 3: Creating the client instance configuration file
